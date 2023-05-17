@@ -5,6 +5,7 @@ class ModUserDB {
   String? Pr_CompanyID;
   String? Pr_Address;
   String? Pr_PKGUID;
+  int? Pr_Operation;
 
   Map<String, dynamic> UserToJson() {
     final jsonMap = <String, dynamic>{};
@@ -14,6 +15,7 @@ class ModUserDB {
     if (Pr_CompanyID != null) jsonMap["Pr_CompanyID"] = Pr_CompanyID!;
     if (Pr_Address != null) jsonMap["Pr_Address"] = Pr_Address!;
     if (Pr_PKGUID != null) jsonMap["Pr_PKGUID"] = Pr_PKGUID!;
+    if (Pr_Operation != null) jsonMap["Pr_Operation"] = Pr_Operation!;
     return jsonMap;
   }
 }

@@ -34,6 +34,7 @@ class _VwUserDataState extends State<VwUserData> {
   final TextEditingController l_Pr_EmailIDController = TextEditingController();
   final TextEditingController l_Pr_CompanyIDController = TextEditingController();
   final TextEditingController l_Pr_AddressController = TextEditingController();
+  final TextEditingController l_Pr_Operation = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +82,38 @@ class _VwUserDataState extends State<VwUserData> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: PrHeight * 0.010),
+                    child: Center(
+                      child: SizedBox(
+                          width: PrWidth * .890,
+                          child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: l_Pr_Operation,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.grey[100],
+                                hintText: 'Operation',
+                                hintStyle: const TextStyle(color: Colors.black38),
+                                floatingLabelBehavior: FloatingLabelBehavior.always,
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
+                              ),
+                              validator: (value) {
+                                int? parsedValue = int.tryParse(value ?? '');
+                                l_ModUserDB.Pr_Operation = parsedValue;
+
+                                Tuple2<List<String>?, List<String>?> errors = DVMUser.Fnc_Validate(l_ModUserDB);
+                                if (errors.item2 != null && errors.item2!.contains('Pr_Operation')) {
+                                  return errors.item1![errors.item2!.indexOf('Pr_Operation')]; // Return the error message for Pr_EmailID
+                                }
+
+                                return null;
+                              },
+                              onChanged: (value) {
+                                int parsedValue = int.tryParse(value) ?? 0;
+                                l_VmUserData.Pr_txtOperation_Text = parsedValue;                              })),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: PrHeight * 0.02),
                     child: Center(
                       child: SizedBox(
                         width: PrWidth * .890,
@@ -199,36 +232,7 @@ class _VwUserDataState extends State<VwUserData> {
                               })),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: PrHeight * 0.02),
-                    child: Center(
-                      child: SizedBox(
-                          width: PrWidth * .890,
-                          child: TextFormField(
-                              controller: l_Pr_AddressController,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.grey[100],
-                                hintText: 'Address',
-                                hintStyle: const TextStyle(color: Colors.black38),
-                                floatingLabelBehavior: FloatingLabelBehavior.always,
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
-                              ),
-                              validator: (value) {
-                                l_ModUserDB.Pr_Address = value ?? '';
-                                Tuple2<List<String>?, List<String>?> errors = DVMUser.Fnc_Validate(l_ModUserDB);
-                                if (errors.item2 != null && errors.item2!.contains('Pr_Address')) {
-                                  return errors
-                                      .item1![errors.item2!.indexOf('Pr_Address')]; // Return the error message for Pr_EmailID
-                                }
 
-                                return null;
-                              },
-                              onChanged: (value) {
-                                l_VmUserData.Pr_txtAddress_Text = value;
-                              })),
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(top: PrHeight * 0.01),
                     child: Center(
@@ -249,7 +253,7 @@ class _VwUserDataState extends State<VwUserData> {
                                 l_Pr_LnameController.clear();
                                 l_Pr_EmailIDController.clear();
                                 l_Pr_CompanyIDController.clear();
-                                l_Pr_AddressController.clear();
+                                l_Pr_Operation.clear();
                               } else {
                                 l_VmUserData.l_autoValidate.value = true;
                               }

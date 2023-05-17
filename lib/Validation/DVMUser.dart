@@ -31,10 +31,11 @@ class DVMUser {
       lErrorMsgs.add('Please enter your company ID.');
       lFieldNames.add('Pr_CompanyID');
     }
-    if (lModUserDB.Pr_Address?.isEmpty ?? true) {
-      lErrorMsgs.add('Please enter your address.');
-      lFieldNames.add('Pr_Address');
+    if (lModUserDB.Pr_Operation == null || lModUserDB.Pr_Operation == 0) {
+      lErrorMsgs.add('Please enter your Operation.');
+      lFieldNames.add('Pr_Operation');
     }
+
 
     // Add more field validation here as needed
 

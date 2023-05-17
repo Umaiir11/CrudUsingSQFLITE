@@ -69,6 +69,16 @@ class VmUserData extends GetxController{
     l_PrAddress.value = value;
   }
 
+  RxInt l_PrOperation = RxInt(0);
+
+  int get Pr_txtOperation_Text {
+    return l_PrOperation.value;
+  }
+
+  set Pr_txtOperation_Text(int value) {
+    l_PrOperation.value = value;
+  }
+
   List<ModUserDB> lModUserDBList = [];
   FncFillModel() {
 
@@ -80,7 +90,7 @@ class VmUserData extends GetxController{
     lModUserDB.Pr_Lname = Pr_txtLname_Text;
     lModUserDB.Pr_EmailID = Pr_txtEmailID_Text;
     lModUserDB.Pr_CompanyID = Pr_txtCompanyID_Text;
-    lModUserDB.Pr_Address = Pr_txtAddress_Text;
+    lModUserDB.Pr_Operation = Pr_txtOperation_Text;
     lModUserDBList.add(lModUserDB);
 
 

@@ -17,22 +17,22 @@ class DAL extends GetxController {
     await batch.commit();
   }
 
-
   Future<List<String>> FncGenCrudQueries(List<ModUserDB> l_UserList) async {
     List<String> l_InsertionQueries = [];
 
-
-
-    for (ModUserDB user in l_UserList) {
-      final query = '''
+    if (l_UserList[0].Pr_Operation == 1) {
+      for (ModUserDB user in l_UserList) {
+        final query = '''
       INSERT INTO Userss (
         Fname, Lname, EmailID, CompanyID, Address, PKGUID
       ) VALUES (
         '${user.Pr_Fname}', '${user.Pr_Lname}', '${user.Pr_EmailID}', '${user.Pr_CompanyID}', '${user.Pr_Address}', '${user.Pr_PKGUID}'
       )
     ''';
-      l_InsertionQueries.add(query); // Add the query to the list
-    }
+        l_InsertionQueries.add(query); // Add the query to the list
+      }
+    } else if (l_UserList[0].Pr_Operation == 2) {
+    } else if (l_UserList[0].Pr_Operation == 3) {}
 
     return l_InsertionQueries;
   }
