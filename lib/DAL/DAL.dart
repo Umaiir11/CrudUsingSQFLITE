@@ -21,6 +21,8 @@ class DAL extends GetxController {
   Future<List<String>> FncGenCrudQueries(List<ModUserDB> l_UserList) async {
     List<String> l_InsertionQueries = [];
 
+
+
     for (ModUserDB user in l_UserList) {
       final query = '''
       INSERT INTO Users (

@@ -28,14 +28,15 @@ class DBHelper extends GetxController {
         version: 1,
         onCreate: (db, version) async {
           await db.execute('''
-            CREATE TABLE Users (
+            CREATE TABLE Userss (
               id INTEGER PRIMARY KEY,
               Fname TEXT,
               Lname TEXT,
               EmailID TEXT,
               CompanyID TEXT,
               Address TEXT,
-              PKGUID TEXT
+              PKGUID TEXT,
+              Operation INTEGER
             )
           ''');
         },
