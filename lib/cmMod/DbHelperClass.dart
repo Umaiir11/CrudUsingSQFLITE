@@ -16,7 +16,7 @@ class DBHelper extends GetxController {
 
   Future<void> FncCreateDataBase() async {
     final appDirectory = await getApplicationDocumentsDirectory();
-    final dbDirectory = Directory('${appDirectory.path}/sqfliteeT');
+    final dbDirectory = Directory('${appDirectory.path}/sq');
     await dbDirectory.create(recursive: true);
     final dbPath = path.join(dbDirectory.path, 'DBb12.db');
     final databaseExists = await databaseFactory.databaseExists(dbPath);

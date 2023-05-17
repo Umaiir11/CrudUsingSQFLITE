@@ -25,7 +25,7 @@ class DAL extends GetxController {
 
     for (ModUserDB user in l_UserList) {
       final query = '''
-      INSERT INTO Users (
+      INSERT INTO Userss (
         Fname, Lname, EmailID, CompanyID, Address, PKGUID
       ) VALUES (
         '${user.Pr_Fname}', '${user.Pr_Lname}', '${user.Pr_EmailID}', '${user.Pr_CompanyID}', '${user.Pr_Address}', '${user.Pr_PKGUID}'
