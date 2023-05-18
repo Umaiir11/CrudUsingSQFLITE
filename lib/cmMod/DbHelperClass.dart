@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
+import 'package:sqfliteflutterdb/SchemaQuery/TableCreator.dart';
 
 class DBHelper extends GetxController {
   Database? l_Database;
@@ -16,9 +17,9 @@ class DBHelper extends GetxController {
 
   Future<void> FncCreateDataBase() async {
     final appDirectory = await getApplicationDocumentsDirectory();
-    final dbDirectory = Directory('${appDirectory.path}/sq');
+    final dbDirectory = Directory('${appDirectory.path}/MyDatabase');
     await dbDirectory.create(recursive: true);
-    final dbPath = path.join(dbDirectory.path, 'DBb12.db');
+    final dbPath = path.join(dbDirectory.path, 'DB1.db');
     final databaseExists = await databaseFactory.databaseExists(dbPath);
     if (databaseExists) {
       l_Database = await openDatabase(dbPath);
@@ -26,26 +27,9 @@ class DBHelper extends GetxController {
       l_Database = await openDatabase(
         dbPath,
         version: 1,
-        onCreate: (db, version) async {
-          await db.execute('''
-            CREATE TABLE Userss (
-              id INTEGER PRIMARY KEY,
-              Fname TEXT,
-              Lname TEXT,
-              EmailID TEXT,
-              CompanyID TEXT,
-              Address TEXT,
-              PKGUID TEXT,
-              Operation INTEGER
-            )
-          ''');
-        },
       );
+      final tableCreator = TableCreator();
+      await tableCreator.createTable(l_Database!);
     }
   }
-
-
-
-
-
 }

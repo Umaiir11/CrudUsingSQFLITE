@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqfliteflutterdb/MVVM/Model/DB/ModUserDB.dart';
 
-import '../MVVM/Model/DB/ModUserDB.dart';
 import '../cmMod/DbHelperClass.dart';
 
 class DAL extends GetxController {
@@ -15,25 +15,47 @@ class DAL extends GetxController {
       batch.execute(query);
     }
     await batch.commit();
+
+    // Clear the list after the data is stored on the database.
+    l_UserList.clear();
   }
 
   Future<List<String>> FncGenCrudQueries(List<ModUserDB> l_UserList) async {
-    List<String> l_InsertionQueries = [];
+    List<String> l_Queries = [];
 
-    if (l_UserList[0].Pr_Operation == 1) {
-      for (ModUserDB user in l_UserList) {
+    for (ModUserDB l_ModUserDB in l_UserList) {
+      if (l_ModUserDB.Pr_Operation == 1) {
         final query = '''
-      INSERT INTO Userss (
-        Fname, Lname, EmailID, CompanyID, Address, PKGUID
-      ) VALUES (
-        '${user.Pr_Fname}', '${user.Pr_Lname}', '${user.Pr_EmailID}', '${user.Pr_CompanyID}', '${user.Pr_Address}', '${user.Pr_PKGUID}'
-      )
-    ''';
-        l_InsertionQueries.add(query); // Add the query to the list
+        INSERT INTO Userss (
+          Fname, Lname, EmailID, CompanyID, Operation, PKGUID
+        ) VALUES (
+          '${l_ModUserDB.Pr_Fname}', '${l_ModUserDB.Pr_Lname}', '${l_ModUserDB.Pr_EmailID}', 
+          '${l_ModUserDB.Pr_CompanyID}', '${l_ModUserDB.Pr_Operation}', '${l_ModUserDB.Pr_PKGUID}'
+        )
+      ''';
+        l_Queries.add(query);
+      } else if (l_ModUserDB.Pr_Operation == 2) {
+        final query = '''
+        UPDATE Userss SET
+          Fname = '${l_ModUserDB.Pr_Fname}',
+          Lname = '${l_ModUserDB.Pr_Lname}',
+          EmailID = '${l_ModUserDB.Pr_EmailID}',
+          CompanyID = '${l_ModUserDB.Pr_CompanyID}',
+          Operation = '${l_ModUserDB.Pr_Operation}'
+        WHERE Fname = '${l_ModUserDB.Pr_Fname}'
+          AND Lname = '${l_ModUserDB.Pr_Lname}'
+      ''';
+        l_Queries.add(query); // Add the query to the list
+      } else if (l_ModUserDB.Pr_Operation == 3) {
+        final query = '''
+        DELETE FROM Userss
+        WHERE Fname = '${l_ModUserDB.Pr_Fname}'
+          AND Lname = '${l_ModUserDB.Pr_Lname}'
+      ''';
+        l_Queries.add(query);
       }
-    } else if (l_UserList[0].Pr_Operation == 2) {
-    } else if (l_UserList[0].Pr_Operation == 3) {}
+    }
 
-    return l_InsertionQueries;
+    return l_Queries;
   }
 }

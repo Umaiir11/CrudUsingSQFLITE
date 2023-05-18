@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:sqfliteflutterdb/MVVM/Model/DB/ModUserDB.dart';
 import 'package:uuid/uuid.dart';
 
-import '../Model/DB/ModUserDB.dart';
 
 class VmUserData extends GetxController{
 

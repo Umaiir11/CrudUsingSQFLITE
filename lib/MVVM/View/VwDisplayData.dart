@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sqfliteflutterdb/DAL/DAL.dart';
+import 'package:sqfliteflutterdb/MVVM/Model/DB/ModUserDB.dart';
 import 'package:tuple/tuple.dart';
-
 import '../../Validation/DVMUser.dart';
 import '../../cmMod/DbHelperClass.dart';
-import '../Model/DB/ModUserDB.dart';
 import '../ViewModel/VmUserData.dart';
 
 class VwUserData extends StatefulWidget {
@@ -279,6 +278,7 @@ class _VwUserDataState extends State<VwUserData> {
                             onPressed: () async {
                               if (l_VmUserData.lModUserDBList.isNotEmpty) {
                                 DAL().Fnc_CudUser(l_VmUserData.lModUserDBList);
+
                               }
                             },
                             child: Text(
