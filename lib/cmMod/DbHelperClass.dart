@@ -6,16 +6,16 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqfliteflutterdb/SchemaQuery/TableCreator.dart';
 
 class DBHelper {
-   Database? l_Database;
+  Database? l_Database;
 
-   Future<Database?> FncGetDatabaseIns() async {
+  Future<Database?> FncGetDatabaseIns() async {
     if (l_Database == null) {
       await FncCreateDataBase();
     }
     return l_Database;
   }
 
-   Future<void> FncCreateDataBase() async {
+  Future<void> FncCreateDataBase() async {
     final appDirectory = await getApplicationDocumentsDirectory();
     final dbDirectory = Directory('${appDirectory.path}/Usderr1');
     await dbDirectory.create(recursive: true);
@@ -25,15 +25,14 @@ class DBHelper {
       l_Database = await openDatabase(
         dbPath,
         version: 1,
-
       );
-      final tableCreator = TableCreator();
-      await tableCreator.FncCreateTable(l_Database!);
+      final l_TableCreator = TableCreator();
+      await l_TableCreator.FncCreateTable(l_Database!);
     } else {
       try {
         l_Database = await openDatabase(dbPath);
-        final tableCreator = TableCreator();
-        await tableCreator.FncCreateTable(l_Database!);
+        final l_TableCreator = TableCreator();
+        await l_TableCreator.FncCreateTable(l_Database!);
       } catch (e) {
         await deleteDatabase(dbPath);
         await FncCreateDataBase();
