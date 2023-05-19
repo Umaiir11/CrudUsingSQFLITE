@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqfliteflutterdb/SchemaQuery/TableCreator.dart';
+import 'package:sqfliteflutterdb/SchemaQuery/SchemaQuery.dart';
 
 class DBHelper {
   Database? l_Database;
@@ -26,13 +26,13 @@ class DBHelper {
         dbPath,
         version: 1,
       );
-      final l_TableCreator = TableCreator();
-      await l_TableCreator.FncCreateTable(l_Database!);
+      final l_SchemaQuery = SchemaQuery();
+      await l_SchemaQuery.FncCreateTable(l_Database!);
     } else {
       try {
         l_Database = await openDatabase(dbPath);
-        final l_TableCreator = TableCreator();
-        await l_TableCreator.FncCreateTable(l_Database!);
+        final l_SchemaQuery = SchemaQuery();
+        await l_SchemaQuery.FncCreateTable(l_Database!);
       } catch (e) {
         await deleteDatabase(dbPath);
         await FncCreateDataBase();

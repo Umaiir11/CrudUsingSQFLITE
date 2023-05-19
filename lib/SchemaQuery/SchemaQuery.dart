@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-class TableCreator {
+class SchemaQuery {
   Future<void> FncCreateTable(Database l_DataBase) async {
     await l_DataBase.execute('''
       CREATE TABLE IF NOT EXISTS Users (
