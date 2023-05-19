@@ -20,7 +20,6 @@ class TableCreator {
       'Number': 'TEXT',
       'Number45': 'TEXT',
       'Number955': 'TEXT',
-      'Number9115': 'TEXT',
     });
 
     await FncCreateView(l_DataBase, 'Users');
