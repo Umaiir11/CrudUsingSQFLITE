@@ -30,7 +30,7 @@ class TableCreator {
     List<String> l_ExistingColumnNames = l_ExistingColumns.map((column) => column['name'] as String).toList();
 
     List<String> l_NewColumnNames =
-    l_ColumnsToAdd.keys.where((columnName) => !l_ExistingColumnNames.contains(columnName)).toList();
+        l_ColumnsToAdd.keys.where((columnName) => !l_ExistingColumnNames.contains(columnName)).toList();
 
     for (String columnName in l_NewColumnNames) {
       String columnType = l_ColumnsToAdd[columnName]!;
