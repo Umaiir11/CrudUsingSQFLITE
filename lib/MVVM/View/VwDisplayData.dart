@@ -21,7 +21,7 @@ class _VwUserDataState extends State<VwUserData> {
   @override
   void initState() {
     // TODO: implement initState
-    DBHelper().FncCreateDataBase();
+    //DBHelper().FncCreateDataBase();
     super.initState();
   }
 
@@ -247,7 +247,6 @@ class _VwUserDataState extends State<VwUserData> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 l_VmUserData.FncFillModel();
-
                                 l_Pr_FnameController.clear();
                                 l_Pr_LnameController.clear();
                                 l_Pr_EmailIDController.clear();
@@ -283,6 +282,27 @@ class _VwUserDataState extends State<VwUserData> {
                             },
                             child: Text(
                               "Save to DB",
+                            ),
+                          )),
+                    ),
+                  ),   Padding(
+                    padding: EdgeInsets.only(top: PrHeight * 0.01),
+                    child: Center(
+                      child: SizedBox(
+                          width: 400,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5), // <-- Radius
+                                ),
+                                backgroundColor: Colors.cyan),
+                            onPressed: () async {
+                          DBHelper.FncCreateDataBase();
+
+                              },
+                            child: Text(
+                              "DBcheck",
                             ),
                           )),
                     ),

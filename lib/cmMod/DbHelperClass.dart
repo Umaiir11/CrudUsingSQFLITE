@@ -1,35 +1,43 @@
 import 'dart:io';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
+import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as path;
 import 'package:sqfliteflutterdb/SchemaQuery/TableCreator.dart';
 
-class DBHelper extends GetxController {
-  Database? l_Database;
 
-  Future<Database?> FncGetDatabaseIns() async {
-    if (l_Database == null) {
+class DBHelper {
+  static Database? _database;
+
+  static Future<Database?> FncGetDatabaseIns() async {
+    if (_database == null) {
       await FncCreateDataBase();
     }
-    return l_Database;
+    return _database;
   }
 
-  Future<void> FncCreateDataBase() async {
+  static Future<void> FncCreateDataBase() async {
     final appDirectory = await getApplicationDocumentsDirectory();
-    final dbDirectory = Directory('${appDirectory.path}/MyDatabase');
+    final dbDirectory = Directory('${appDirectory.path}/Usderr1');
     await dbDirectory.create(recursive: true);
-    final dbPath = path.join(dbDirectory.path, 'DB1.db');
+    final dbPath = path.join(dbDirectory.path, 'T1T1.db');
     final databaseExists = await databaseFactory.databaseExists(dbPath);
-    if (databaseExists) {
-      l_Database = await openDatabase(dbPath);
-    } else {
-      l_Database = await openDatabase(
+    if (!databaseExists) {
+      _database = await openDatabase(
         dbPath,
         version: 1,
       );
       final tableCreator = TableCreator();
-      await tableCreator.createTable(l_Database!);
+      await tableCreator.FncCreateTable(_database!);
+    } else {
+      try {
+        _database = await openDatabase(dbPath);
+        final tableCreator = TableCreator();
+        await tableCreator.FncCreateTable(_database!);
+      } catch (e) {
+        await deleteDatabase(dbPath);
+        await FncCreateDataBase();
+      }
     }
   }
 }
