@@ -22,6 +22,7 @@ class _VwUserDataState extends State<VwUserData> {
   void initState() {
     // TODO: implement initState
     //DBHelper().FncCreateDataBase();
+    DBHelper.FncCreateDataBase();
     super.initState();
   }
 
@@ -298,7 +299,7 @@ class _VwUserDataState extends State<VwUserData> {
                                 ),
                                 backgroundColor: Colors.cyan),
                             onPressed: () async {
-                          DBHelper.FncCreateDataBase();
+
 
                               },
                             child: Text(
