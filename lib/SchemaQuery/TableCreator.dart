@@ -15,7 +15,6 @@ class TableCreator {
       )
     ''');
 
-    // Check if the columns "Country" and "Area" already exists in the table.
     List<Map<String, dynamic>> columns = await db.rawQuery('PRAGMA table_info(Users)');
 
     // If the columns do not exist, add them.
