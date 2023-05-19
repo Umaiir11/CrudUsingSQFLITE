@@ -22,7 +22,7 @@ class _VwUserDataState extends State<VwUserData> {
   void initState() {
     // TODO: implement initState
     //DBHelper().FncCreateDataBase();
-    DBHelper.FncCreateDataBase();
+    DBHelper().FncCreateDataBase();
     super.initState();
   }
 

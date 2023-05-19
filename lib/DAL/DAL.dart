@@ -7,7 +7,7 @@ import '../cmMod/DbHelperClass.dart';
 
 class DAL extends GetxController {
   Fnc_CudUser(List<ModUserDB> l_UserList) async {
-    Database? l_Database = await DBHelper.FncGetDatabaseIns();
+    Database? l_Database = await DBHelper().FncGetDatabaseIns();
     List<String> l_InsertionQuery = await QueryGen().FncGenCrudQueries(l_UserList);
 
     final batch = l_Database!.batch();

@@ -1,9 +1,9 @@
 import 'package:sqflite/sqflite.dart';
 
 class TableCreator {
-  Future<void> FncCreateTable(Database db) async {
-    await db.execute('''
-      CREATE TABLE Users (
+  Future<void> FncCreateTable(Database l_DataBase) async {
+    await l_DataBase.execute('''
+      CREATE TABLE IF NOT EXISTS Users (
         id INTEGER PRIMARY KEY,
         Fname TEXT,
         Lname TEXT,
@@ -15,27 +15,25 @@ class TableCreator {
       )
     ''');
 
-    List<Map<String, dynamic>> columns = await db.rawQuery('PRAGMA table_info(Users)');
+    await FncCheckAndAddColumns(l_DataBase, 'Users', {
+      'DATA': 'INTEGER',
+      'Number': 'TEXT',
+      'Number45': 'TEXT',
+      'Number41': 'TEXT',
+    });
+  }
 
-    // If the columns do not exist, add them.
-    if (!columns.any((column) => column['name'] == 'DATA') ||
-        !columns.any((column) => column['name'] == 'Number') ||
-        !columns.any((column) => column['name'] == 'Number2') ||
-        !columns.any((column) => column['name'] == 'test4')) {
-      // Add columns
-      await db.execute('''
-      ALTER TABLE Users ADD DATA INTEGER
-    ''');
-      await db.execute('''
-      ALTER TABLE Users ADD Number TEXT
-    ''');
-   await db.execute('''
-      ALTER TABLE Users ADD Number2 TEXT
-    ''');
+  Future<void> FncCheckAndAddColumns(Database l_DataBase, String l_TableName, Map<String, String> l_ColumnsToAdd) async
+  {
+    List<Map<String, dynamic>> l_ExistingColumns = await l_DataBase.rawQuery('PRAGMA table_info($l_TableName)');
+    List<String> l_ExistingColumnNames = l_ExistingColumns.map((column) => column['name'] as String).toList();
 
-      await db.execute('''
-      ALTER TABLE Users ADD test4 TEXT
-    ''');
+    List<String> l_NewColumnNames =
+        l_ColumnsToAdd.keys.where((columnName) => !l_ExistingColumnNames.contains(columnName)).toList();
+
+    for (String columnName in l_NewColumnNames) {
+      String columnType = l_ColumnsToAdd[columnName]!;
+      await l_DataBase.execute('ALTER TABLE $l_TableName ADD COLUMN $columnName $columnType');
     }
   }
 }
